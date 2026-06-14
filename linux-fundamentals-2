@@ -1,0 +1,70 @@
+What is SSH & how Does it Work?
+Secure Shell or SSH simply is a protocol between devices in an encrypted form. Using cryptography, any input we send in a human-readable format is encrypted for travelling over a network -- where it is then unencrypted once it reaches the remote machine, such as in the diagram below.
+
+Using SSH to Login to Your Linux Machine - 
+1. To login the command used is ssh and then the username of the account , @ the ip address of the machine .
+2. For example: ssh tryhackme@10.49.153.99 after this we have to access the password to the account .The password for this account was tryhackme after -
+this any command we enter it will execute on the remote machine.
+
+Introduction to flags and switches -
+1.ls list and -a (-all) shows hidden files with .in front of the hidden files.
+2. To access manual page for commands input man and then the command name ex- man ls .
+3. We use -h flag to access output in human readable format .
+
+Some commands for file managemaent -
+touch - to create file.
+mkdir (make directory) - to make directory .
+cp - to copy (cp note note2 - copy note into note2 file).
+mv- to move (same as cp).
+rm - to remove (have to use rm -R to remove directory).
+file - to determine file type.
+
+Permission 101 -
+To switch between users two things are required.
+1. The user we wish to switch to and password of the user.
+when using su to switch to "user2", our new session drops us into our previous user's home directory.  
+Where now, after using -l, our new session has dropped us into the home directory of "user" automatically. 
+
+Understanding File Permissions in Numeric Format
+First 3 - owner  (rwx)
+Next 3 - group  (rwx)
+Last 3 - others (rwx)
+Each permission has a numeric value:
+Read(r) - 4
+write(w) - 3
+execute(x) - 1
+rwxrwxrwx = 777
+More Common Examples
+rwxr-xr-x	755	Owner can do everything, others can read and execute
+rw-r--r--	644	Owner can read/write, others can only read
+rwx------	700	Only the owner has access
+Understanding numeric permissions is important because:
+
+Many Linux commands use numeric values (e.g. chmod 755 file)
+You can quickly identify security risks
+You can control who can access sensitive files
+For example:
+
+chmod 750 system_overview.txt
+This means:
+
+Owner: full access
+Group: read + execute
+Others: no access
+
+Common Directories-
+/etc - The etc folder (short for etcetera) is a commonplace location to store system files that are used by your operating system.
+the "passwd" and "shadow" files. These two files are special for Linux as they show how your system stores the passwords for each user in encrypted formatting called sha512
+/var - one of the main root folders found on a Linux install. This folder stores data that is frequently accessed or written by services or applications running on the system.
+/root - Unlike the /home directory, the /root folder is actually the home for the "root" system user
+/tmp - the /tmp directory is volatile and is used to store data that is only needed to be accessed once or twice. After restarting the computer it clears out.
+
+
+
+
+
+
+
+
+  
+
