@@ -31,7 +31,7 @@ Next 3 - group  (rwx)
 Last 3 - others (rwx)
 Each permission has a numeric value:
 Read(r) - 4
-write(w) - 3
+write(w) - 2
 execute(x) - 1
 rwxrwxrwx = 777
 More Common Examples
