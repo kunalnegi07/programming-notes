@@ -1,1 +1,100 @@
+Terminal Text Editors ---
+1. Nano - To create or edit a file using nano, we simply use nano filename.
+we use ctrl keys ^ to exit edit files in nano editor.
+To exit nano - use ctrl x.
+2. Vim - A lot more advanced text editor.
+
+General useful utilities ---
+1. Downloading Files (wget) - This command allows us to download files from the web via HTTP .
+to download we simply has to provide the address of the resource.
+Ex - wget https://assets.tryhackme.com/additional/linux-fundamentals/part3/myfile.txt
+2. Transferring Files From Your Host - SCP (Secure Copy) (SSH) - this command allows you to transfer files
+between two computers using the SSH protocol to provide both authentication and encryption.
+Copy files & directories from your current system to a remote system
+Copy files & directories from a remote system to your current system
+Provided that we know usernames and passwords for a user on your current system and a user on the remote system. 
+copy a file form our machine to a remote machine Ex- scp important.txt ubuntu@192.168.1.30:/home/ubuntu/transferred.txt
+copy a file from a remote computer that we're not logged into Ex- scp ubuntu@192.168.1.30:/home/ubuntu/documents.txt notes.txt
+
+Serving Files From Your Host - WEB --- 
+1. Ubuntu machines come pre-packaged with python3. Python helpfully provides a lightweight and easy-to-use module called "HTTPServer".
+This module turns your computer into a quick and easy web server that you can use to serve your own files, where they can then be downloaded 
+by another computing using commands such as curl and wget. All we need to do is run python3 -m  http.server in the terminal to start the module
+you will need to open a new terminal to use wget and leave the one that you have started the Python3 web server in. This is because,
+once you start the Python3 web server, it will run in that terminal until you cancel it.
+
+Processes in linux ---
+Processes are managed by the kernel, where each process will have an ID associated with it, also known as its PID. 
+We can use the friendly ps command to provide a list of the running processes as our user's session and some additional information such as its status code,
+the session that is running it, how much usage time of the CPU it is using, and the name of the actual program or command that is being executed:
+To see the processes run by other users and those that don't run from a session (i.e. system processes), we need to provide aux to the ps command like so: ps aux
+top command; top gives you real-time statistics about the processes running on your system instead of a one-time view. These statistics will refresh every 10 seconds,
+but will also refresh when you use the arrow keys to browse the various rows.
+Managing Processes - To kill a command, we can use the appropriately named kill command and the associated PID that we wish to kill. i.e., to kill PID 1337, we'd use kill 1337.
+SIGTERM - Kill the process, but allow it to do some cleanup tasks beforehand
+SIGKILL - Kill the process - doesn't do any cleanup after the fact
+SIGSTOP - Stop/suspend a process
+How do Processes Start?
+The Operating System (OS) uses namespaces to ultimately split up the resources available on the computer to (such as CPU, RAM and priority) processes
+The process with an ID of 0 is a process that is started when the system boots. This process is the system's init on Ubuntu, such as systemd, which is used to provide
+a way of managing a user's processes and sits in between the operating system and the user. 
+once a system boots and it initialises, systemd is one of the first processes that are started. Any program or piece of software that we want to start will start 
+as what's known as a child process of systemd. This means that it is controlled by systemd, but will run as its own process (although sharing the resources from systemd) to make it easier for us to identify and the likes.
+Getting Processes/Services to Start on Boot -
+Some applications can be started on the boot of the system that we own. For example, web servers, database servers or file transfer servers.
+systemctl -- this command allows us to interact with the systemd process/daemon.
+ex - systemctl [option] [service]
+to tell apache to start up, we'll use systemctl start apache2. 
+We can do five options with systemctl:
+Start
+Stop
+Enable
+Disable
+Status
+An Introduction to Backgrounding and Foregrounding in Linux -- 
+similar to & operator 
+we can use Ctrl + Z on our keyboard to background a process. It is also an effective way of "pausing" the execution of a script or command like
+Foregrounding a process --
+To bring back backgroung processes to focus we can use fg command to bring this back to focus .
+
+Maintaing your system - Automation ---
+Crontab is one of the processes that is started during boot, which is responsible for facilitating and managing cron jobs.
+A crontab is simply a special file with formatting that is recognised by the cron process to execute each line step-by-step.
+it requires 6 specific values --
+Value	Description
+MIN	- What minute to execute at
+HOUR - What hour to execute at
+DOM	- What day of the month to execute at
+MON	- What month of the year to execute at
+DOW	- What day of the week to execute at
+CMD	- The actual command that will be executed.
+to backup "cmnatic"'s  "Documents" every 12 hours. We would use the following formatting: 
+0 */12 * * * cp -R /home/cmnatic/Documents /var/backups/
+An interesting feature of crontabs is that these also support the wildcard or asterisk (*). If we do not wish to provide 
+a value for that specific field, i.e. we don't care what month, day, or year it is executed -- only that it is executed every 12 hours, we simply just place an asterisk.
+Crontabs can be edited by using crontab -e, where you can select an editor (such as Nano) to edit your crontab.
+
+Introducing Packages & Software Repos ---
+When developers wish to submit software to the community, they will submit it to an  "apt" repository. If approved, their programs and tools will be released into the wild. 
+Managing Your Repositories (Adding and Removing) --
+Normally we use the apt command to install software onto our Ubuntu system. The apt command is a part of the package management software also named apt. 
+Whilst we can install software through the use of package installers such as dpkg
+he benefits of apt means that whenever we update our system -- the repository that contains the pieces of software that we add also gets checked for updates.
+the integrity of what we download is guaranteed by the use of what is called GPG (Gnu Privacy Guard) keys. These keys are essentially a safety check from the developers saying, "here's our software".
+If the keys do not match up to what your system trusts and what the developers used, then the software will not be downloaded.
+
+Managing your system logs---
+Located in the /var/log directory, these files and folders contain logging information for applications and services running on your system.
+The Operating System  (OS) has become pretty good at automatically managing these logs in a process that is known as "rotating".
+he logs for services such as a web server contain information about every single request - allowing developers or administrators to diagnose performance issues or investigate an intruder's activity.
+
+
+
+
+
+
+
+
+
+
 
