@@ -1,1 +1,105 @@
+# Windows Fundamentals 1 - Notes
+
+## File Systems
+- **FAT16/FAT32**
+  - Used in USB drives and memory cards.
+  - Cannot store files larger than 4 GB.
+  - No journaling support.
+
+- **NTFS (New Technology File System)**
+  - Default Windows file system.
+  - Journaling file system (can recover from crashes).
+  - Supports files > 4 GB.
+  - Supports permissions, compression, and encryption (EFS).
+
+## NTFS Permissions
+- Full Control
+- Modify
+- Read & Execute
+- List Folder Contents
+- Read
+- Write
+
+View permissions:
+`Right Click -> Properties -> Security`
+
+## Alternate Data Streams (ADS)
+- NTFS feature that allows extra data streams in a file.
+- Hidden from Windows Explorer.
+- Can be viewed with PowerShell.
+- Sometimes abused by malware to hide data.
+
+## Windows Folder
+- Default location: `C:\Windows`
+- Environment variable: `%windir%`
+
+## System32
+- Location: `C:\Windows\System32`
+- Contains critical Windows system files.
+- Deleting files here can break Windows.
+
+## User Accounts
+### Administrator
+- Install software
+- Add/remove users
+- Change system settings
+
+### Standard User
+- Access personal files
+- Cannot make system-wide changes
+
+## User Profiles
+Location:
+`C:\Users\<username>`
+
+Common folders:
+- Desktop
+- Documents
+- Downloads
+- Music
+- Pictures
+
+## Local Users and Groups
+Open:
+`Win + R -> lusrmgr.msc`
+
+Contains:
+- Users
+- Groups
+
+Users inherit permissions from groups they belong to.
+
+## User Account Control (UAC)
+- Protects Windows from unauthorized changes.
+- Prompts for administrator approval when elevated privileges are required.
+- Shield icon = admin privileges needed.
+
+## Settings vs Control Panel
+### Settings
+- Modern Windows configuration tool.
+
+### Control Panel
+- Advanced system management tool.
+
+Installed programs:
+`Control Panel -> Programs -> Programs and Features`
+
+## Task Manager
+Open:
+`Ctrl + Shift + Esc`
+
+Used to:
+- View running apps/processes
+- Monitor CPU, RAM, Disk, Network usage
+- End unresponsive programs
+
+
+- NTFS = Modern Windows file system
+- ADS = Hidden data streams
+- `%windir%` = Windows folder
+- System32 = Critical OS files
+- `C:\Users` = User profiles
+- `lusrmgr.msc` = Local Users & Groups
+- UAC = Security prompt for admin actions
+- Task Manager = Process & performance monitoring
 
