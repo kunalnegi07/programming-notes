@@ -1,1 +1,92 @@
+System configuration and advanced system settings---
+The System Configuration utility (MSConfig) is for advanced troubleshooting, and its main purpose is to help diagnose startup issues.
+The utility has five tabs across the top.
+General
+Boot
+Services
+Startup
+Tools
+In the General tab, we can select what devices and services for Windows to load upon boot. The options are: Normal, Diagnostic, or Selective. 
+In the Boot tab, we can define various boot options for the Operating System
+The Services tab lists all services configured for the system regardless of their state (running or stopped).
+As you can see, Microsoft advises using Task Manager (taskmgr) to manage (enable/disable) startup items. The System Configuration utility is NOT a startup management program. 
+the only reliable way to view user-level startup items is through the Startup folder itself. You can access it by pressing Win + R, which opens the Run Dialog, typing shell:startup
+Accessing Advanced System Settings
+To modify performance behavior and recovery options, open the System Properties panel:
+1. Press the Win key or click the Windows Search bar.
+2. Type "View advanced system settings" and press Enter.
+3. The System Properties dialog box will open on the Advanced tab.
+Virtual Memory & Page File Management
+Windows uses a Page File (pagefile.sys) as secondary, virtual memory on the storage drive when physical RAM becomes fully utilized. This mechanism prevents application crashes, out-of-memory errors, and severe system slowdowns.
+How to View or Modify the Page File:
+1. In System Properties (Advanced tab), click Settings under the Performance section.
+2. Navigate to the Advanced tab within the Performance Options window.
+3. Review the total paging file size under the Virtual Memory heading. Click Change... to modify.
+Configurable Parameters:
+- Storage Drive: Specifies the exact volume where the page file resides.
+- Initial Size (MB): The starting allocation of the virtual memory space.
+- Maximum Size (MB): The upper boundary limit the page file can reach.
+- System-Managed Size: An option allowing Windows to scale the size dynamically based on workload.
+Startup and Recovery (Crash Dumps)
+When Windows encounters a critical, unrecoverable error (such as a Blue Screen of Death / BSOD), it generates a crash dump file. Administrative tools use these logs to analyze, debug, and diagnose the root cause of system failures.
+How to Configure Crash Dumps:
+1. In System Properties (Advanced tab), click Settings under the Startup and Recovery section.
+2. Locate the Write debugging information drop-down menu.
+Supported Crash Dump Types:
+- Automatic memory dump: The default setting; balances information density with file size optimization.
+- Kernel memory dump: Records only kernel-mode memory, omitting unallocated or user-mode data.
+- Small memory dump (256 KB): Captures minimal useful information (stop codes, drivers) for quick triage.
+- Complete memory dump: Records the entire contents of physical RAM at the time of the crash (requires large disk space).
+- None: Disables dump logging completely; no debugging data is saved.
+
+Change UAC settings---
+The UAC settings can be changed or even turned off entirely
+You can move the slider to see how the setting will change
+This slider has four security levels-
+1. Always notify: This is the highest security. Windows notifies you whenever any apps or you yourself try to make changes, and the desktop dims (Secure Desktop).
+2. Notify for apps: Windows notifies only when apps try to make changes, but not when you change Windows settings. This option is enabled by default.
+3. Notify without dimming: Same as above (Notify for apps), but this time the screen does not dim. 
+4. Never notify: Notifications are turned off. Windows won’t warn you about any changes made by you or any apps. 
+
+Computer management---
+The Computer Management (compmgmt) utility has three primary sections: System Tools, Storage, and Services and Applications.
+System Tools-Task Scheduler. Per Microsoft, with Task Scheduler, we can create and manage common tasks that our computer will carry out automatically at the times we specify.
+To view the scheduled tasks that are present on the system, click Task Scheduler Library. This will display all the scheduled tasks of the system. You can click on any of them to view their details.
+To create a basic task, click on Create Basic Task under Actions (right pane).
+Event Viewer allows us to view events that have occurred on the computer. These records of events can be seen as an audit trail that can be used to understand the activity of the computer system. This information is often used to diagnose problems and investigate actions executed on the system. 
+Event Viewer has three panes.
+The pane on the left provides a hierarchical tree listing of the event log providers. (as shown in the image above)
+The pane in the middle will display a general overview and summary of the events specific to a selected provider.
+The pane on the right is the actions pane.
+Shared Folders is where you will see a complete list of shares and folders shared that others can connect to.
+In Performance, you'll see a utility called Performance Monitor (perfmon).
+Perfmon is used to view performance data either in real-time or from a log file. This utility is useful for troubleshooting performance issues on a computer system, whether local or remote. 
+Device Manager allows us to view and configure the hardware, such as disabling any hardware attached to the computer.
+Storage- Under Storage is Windows Server Backup and Disk Management.
+Disk Management is a system utility in Windows that enables you to perform advanced storage tasks.  Some tasks are:
+Set up a new drive
+Extend a partition
+Shrink a partition
+Assign or change a drive letter (ex. E:) 
+a service is a special type of application that runs in the background. You can see all the services and their statuses by clicking the Services button given under the Services and Applications section\
+There is a field known as Startup type in a service’s Properties window, as shown above. It determines how and when the service is configured to start.
+We can set a service to Automatic, which means it starts every time the system boots, or Manual, which means it only starts when another process or user triggers this service, or Disabled, which means it should not run at all
+WMI Control configures and controls the Windows Management Instrumentation (WMI) service
+"WMI allows scripting languages (such as VBScript or Windows PowerShell) to manage Microsoft Windows personal computers and servers, both locally and remotely. Microsoft also provides a command-line interface to WMI called Windows Management Instrumentation Command-line (WMIC)."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
