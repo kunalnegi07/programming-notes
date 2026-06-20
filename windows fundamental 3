@@ -1,1 +1,78 @@
+Windows Security---
+Virus & threat protection
+Firewall & network protection
+App & browser control
+Device security
+status icons-
+Green means your device is sufficiently protected, and there aren't any recommended actions.
+Yellow means there is a safety recommendation for you to review.
+Red is a warning that something needs your immediate attention.
+
+Virus & Threat protection---
+Virus & threat protection is divided into two parts:
+Current threats
+Virus & threat protection settings
+Current threats--
+Scan options-
+Quick scan - Checks folders in your system where threats are commonly found.
+Full scan - Checks all files and running programs on your hard disk. This scan could take longer than one hour.
+Custom scan - Choose which files and locations you want to check.
+Threat history
+Last scan - Windows Defender Antivirus automatically scans your device for viruses and other threats to help keep it safe.
+Quarantined threats - Quarantined threats have been isolated and prevented from running on your device. They will be periodically removed.
+Allowed threats - Allowed threats are items identified as threats, which you allowed to run on your device. 
+Virus & threat protection settings--
+Real-time protection - Locates and stops malware from installing or running on your device.
+Cloud-delivered protection - Provides increased and faster protection with access to the latest protection data in the cloud.
+Automatic sample submission - Send sample files to Microsoft to help protect you and others from potential threats. 
+Controlled folder access - This feature, if enabled, protects files, folders, and memory areas on your device from unauthorized changes by malicious or unknown applications.
+If it is enabled, only approved and trusted apps would be allowed to modify the files in the protected folders. To enable this feature, click on the Manage controlled folder access button under Controlled Folder Access and turn it on. 
+Exclusions - Windows Defender Antivirus allows you to exclude any files or folders from the antivirus scanning. This is done to reduce the number of false positives. Administrators might not want the antivirus to scan specific files or folders. 
+By adding them to the exclusions list, the antivirus would ignore them and scan all the other files and folders. To add any file or folder to the Windows Defender exclusion list, click on the Add or remove exclusions button under Exclusions and add as many exclusions as you want. 
+Notifications - Windows Defender Antivirus will send notifications with critical information about the health and security of your device. 
+Ransomware protection
+Controlled folder access - Ransomware protection requires this feature to be enabled, which in turn requires Real-time protection to be enabled.
+
+Firewall and Network Protection---
+What is a firewall?
+Traffic flows into and out of devices via what we call ports. A firewall is what controls what is - and more importantly isn't - allowed to pass through those ports. You can think of it like a security guard standing at the door, checking the ID of everything that tries to enter or exit
+What is the difference between the 3 (Domain, Private, and Public)?
+Domain - The domain profile applies to networks where the host system can authenticate to a domain controller. 
+Private - The private profile is a user-assigned profile and is used to designate private or home networks.
+Public - The default profile is the public profile, used to designate public networks such as Wi-Fi hotspots at coffee shops, airports, and other locations.
+
+App and Browser Control---
+Microsoft Defender SmartScreen protects against phishing or malware websites and applications, and the downloading of potentially malicious files
+Exploit protection-
+Exploit protection is built into Windows 10 (and, in our case, Windows Server 2019) to help protect your device against attacks
+
+Device Security---
+Core isolation-
+Memory Integrity - Prevents attacks from inserting malicious code into high-security processes.
+Security processor-
+your security processor called trusted platform module(TPM) , is providing additional encryption to your device.
+What is the Trusted Platform Module (TPM)?
+Trusted Platform Module (TPM) technology is designed to provide hardware-based, security-related functions.
+A TPM chip is a secure crypto-processor that is designed to carry out cryptographic operations. The chip includes multiple physical security mechanisms to make it tamper-resistant, and malicious software is unable to tamper with the security functions of the TPM
+
+Bitlocker---
+What is BitLocker?
+BitLocker Drive Encryption is a built-in Windows security feature that protects data by encrypting entire hard drives. It ensures that if a computer or hard drive is lost or stolen, unauthorized users cannot pull data off the drive and read it on another machine.
+On devices with TPM installed, BitLocker offers the best protection.
+BitLocker provides the most protection when used with a Trusted Platform Module (TPM) version 1.2 or later. The TPM is a hardware component installed in many newer computers by the computer manufacturers. It works with BitLocker to help protect user data and to ensure that a computer has not been tampered with while the system was offline.
+In addition to the TPM, BitLocker can lock the normal startup process until the user supplies a personal identification number (PIN) or inserts a removable device that contains a startup key
+
+Volume shadow copy service---
+Per Microsoft(opens in new tab), the Volume Shadow Copy Service (VSS) coordinates the required actions to create a consistent shadow copy (also known as a snapshot or a point-in-time copy) of the data that is to be backed up. 
+Volume Shadow Copies are stored on the System Volume Information folder on each drive that has protection enabled.
+If VSS is enabled (System Protection turned on), you can perform the following tasks from within advanced system settings. 
+Create a restore point
+Perform system restore
+Configure restore settings
+Delete restore points
+From a security perspective, malware writers know of this Windows feature and write code in their malware to look for these files and delete them. Doing so makes it impossible to recover from a ransomware attack unless you have an offline/off-site backup.
+
+
+
+
 
