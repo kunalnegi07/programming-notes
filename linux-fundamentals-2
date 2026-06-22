@@ -59,7 +59,10 @@ the "passwd" and "shadow" files. These two files are special for Linux as they s
 /root - Unlike the /home directory, the /root folder is actually the home for the "root" system user
 /tmp - the /tmp directory is volatile and is used to store data that is only needed to be accessed once or twice. After restarting the computer it clears out.
 
-
+Common examples of what gets written to /tmp include:
+Package Installers: Temporary binaries being unpacked during an installation.
+Application Caches: Browser cache, logs, or session information.
+Session Data: Temporary workspace files for text editors or database daemons
 
 
 
