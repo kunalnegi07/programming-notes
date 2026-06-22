@@ -86,7 +86,7 @@ If the keys do not match up to what your system trusts and what the developers u
 Managing your system logs---
 Located in the /var/log directory, these files and folders contain logging information for applications and services running on your system.
 The Operating System  (OS) has become pretty good at automatically managing these logs in a process that is known as "rotating".
-he logs for services such as a web server contain information about every single request - allowing developers or administrators to diagnose performance issues or investigate an intruder's activity.
+The logs for services such as a web server contain information about every single request - allowing developers or administrators to diagnose performance issues or investigate an intruder's activity.
 
 
 
