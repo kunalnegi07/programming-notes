@@ -1,5 +1,5 @@
 What is SSH & how Does it Work?
-Secure Shell or SSH simply is a protocol between devices in an encrypted form. Using cryptography, any input we send in a human-readable format is encrypted for travelling over a network -- where it is then unencrypted once it reaches the remote machine, such as in the diagram below.
+Secure Shell or SSH simply is a protocol between devices in an encrypted form. Using cryptography, any input we send in a human-readable format is encrypted for travelling over a network -- where it is then unencrypted once it reaches the remote machine.
 
 Using SSH to Login to Your Linux Machine - 
 1. To login the command used is ssh and then the username of the account , @ the ip address of the machine .
