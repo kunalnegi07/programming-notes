@@ -55,7 +55,7 @@ Others: no access
 Common Directories-
 /etc - The etc folder (short for etcetera) is a commonplace location to store system files that are used by your operating system.
 the "passwd" and "shadow" files. These two files are special for Linux as they show how your system stores the passwords for each user in encrypted formatting called sha512
-/var - one of the main root folders found on a Linux install. This folder stores data that is frequently accessed or written by services or applications running on the system.
+/var (does caching)- one of the main root folders found on a Linux install. This folder stores data that is frequently accessed or written by services or applications running on the system.
 /root - Unlike the /home directory, the /root folder is actually the home for the "root" system user
 /tmp - the /tmp directory is volatile and is used to store data that is only needed to be accessed once or twice. After restarting the computer it clears out.
 
