@@ -24,7 +24,7 @@ you will need to open a new terminal to use wget and leave the one that you have
 once you start the Python3 web server, it will run in that terminal until you cancel it.
 
 Processes in linux ---
-Processes are managed by the kernel, where each process will have an ID associated with it, also known as its PID. 
+Processes are managed by the kernel, where each process will have an ID associated with it, also known as its PID(process identifier). 
 We can use the friendly ps command to provide a list of the running processes as our user's session and some additional information such as its status code,
 the session that is running it, how much usage time of the CPU it is using, and the name of the actual program or command that is being executed:
 To see the processes run by other users and those that don't run from a session (i.e. system processes), we need to provide aux to the ps command like so: ps aux
