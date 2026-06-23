@@ -1,1 +1,43 @@
+Basic system information---
+set - command is used to check the path from the command line.
+ver - command is used to check the os version.
+systeminfo -  command to list various information about the system such as OS information, system details, processor and memory
+
+Network troubleshooting---
+ipconfig - command tells the network information.
+ipconfig /all - for more network information (consists of mac address).
+The command syntax is ping target_name. Inspired by ping-pong, we send a specific ICMP packet and listen for a response. If a response is received, we know that we can reach the target and that the target can reach us.
+Another valuable tool for troubleshooting is tracert, which stands for trace route. The command tracert target_name traces the network route traversed to reach the target.
+It expects the routers on the path to notify us if they drop a packet because its time-to-live (TTL) has reached zero.
+netstat - this command displays current network connections and listening ports.
+netstat -h, where -h displays the help page(gives informatin about netstat).
+-a displays all established connections and listening ports
+-b shows the program associated with each listening port and established connection
+-o reveals the process ID (PID) associated with the connection
+-n uses a numerical form for addresses and port numbers
+
+File and Disk management---
+You can use cd without parameters to display the current drive and directory. It is the equivalent of asking the system, where am I?
+You can view the child directories using dir
+dir /a - Displays hidden and system files as well.
+dir /s - Displays files in the current directory and all subdirectories.
+tree to visually represent the child directories and subdirectories.
+To delete a directory, use rmdir directory_name
+type - This command will dump the contents of the text file on the screen
+more for longer text files this command will display enough text file contents to fill your terminal window. In other words, for long text files, more will display a single page and wait for you to press Spacebar to move by one page (flip the page) or Enter to move by one line.
+The copy command allows you to copy files from one location to another. ex- copy note note1 - this copies note file to note1.
+move command to move files.
+del or erase to delete a file.
+
+Task and Process management---
+We can list the running processes using tasklist.
+You can check all available filters by displaying the help page using tasklist /?
+Let’s say that we want to search for tasks related to sshd.exe, we can do that with the command tasklist /FI "imagename eq sshd.exe". Note that /FI is used to set the filter image name equals sshd.exe.
+With the process ID (PID) known, we can terminate any task using taskkill /PID target_pid. For example, if we want to kill the process with PID 4567, we would issue the command taskkill /PID 4567.
+chkdsk: checks the file system and disk volumes for errors and bad sectors.
+driverquery: displays a list of installed device drivers.
+sfc /scannow: scans system files for corruption and repairs them if possible.
+/? can be used with most commands to display a help page.
+shutdown /s to shutdown system.
+
 
