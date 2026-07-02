@@ -1,202 +1,336 @@
-````markdown
-# TryHackMe - Wireshark Basics Notes
+Wireshark Basics
 
-# What is Wireshark?
-Wireshark is a free and open-source network protocol analyzer used to capture and inspect network traffic in real time. It is one of the most widely used tools for network troubleshooting, cybersecurity, malware analysis, and penetration testing.
+Wireshark is an open-source packet analyzer used to capture, inspect, and analyze network traffic. It can analyze live traffic or previously captured PCAP/PCAPNG files.
 
 ---
 
-# Uses of Wireshark
-- Network troubleshooting
-- Packet analysis
-- Security monitoring
-- Malware traffic analysis
-- Protocol learning
-- Incident response
-- Digital forensics
+Opening a Capture File
+
+- Go to **File → Open** and select a `.pcap` or `.pcapng` file.
+- The capture loads into the packet list for analysis.
+- You can also drag and drop the file into Wireshark.
 
 ---
 
-# Packet Capture Process
-1. Select a network interface.
-2. Start capturing packets.
-3. Generate or observe network traffic.
-4. Stop the capture.
-5. Analyze packets using filters.
+Main Interface
 
----
+### Packet List Pane
+Displays every captured packet.
 
-# Main Interface Components
-
-## Menu Bar
-Contains options for opening, saving, exporting captures, preferences, etc.
-
-## Toolbar
-Quick access to common functions such as Start, Stop, Restart Capture.
-
-## Display Filter Bar
-Filters displayed packets without changing the original capture.
-
-Example:
-```
-http
-```
-
----
-
-## Packet List Pane
-Displays captured packets with:
+Columns include:
 - Packet Number
 - Time
-- Source IP
-- Destination IP
+- Source
+- Destination
 - Protocol
 - Length
 - Info
 
+Click a packet to inspect it.
+
 ---
 
-## Packet Details Pane
-Shows protocol layers:
+### Packet Details Pane
+
+Shows packet information layer by layer.
+
+Expand each section using the arrow.
+
+Typical layers:
 - Frame
 - Ethernet
-- IP
+- IPv4/IPv6
 - TCP/UDP
-- Application Protocol
+- Application Protocol (HTTP, DNS, FTP, etc.)
+
+Selecting a field highlights its bytes below.
 
 ---
 
-## Packet Bytes Pane
-Displays raw packet data in hexadecimal and ASCII.
+### Packet Bytes Pane
+
+Shows the raw packet in:
+- Hexadecimal
+- ASCII
+
+Useful when examining payloads manually.
 
 ---
 
-# Packet Structure
+Packet Coloring
+
+Wireshark automatically colors packets based on protocol or events.
+
+Examples:
+- Green → HTTP/TCP traffic
+- Light Blue → DNS
+- Black/Red → Errors or bad TCP packets
+
+Coloring helps identify important traffic quickly.
+
+To customize:
+- **View → Coloring Rules**
+
+---
+
+Capture File Properties
+
+View information about the capture.
+
+Go to:
+
+**Statistics → Capture File Properties**
+
+Shows:
+- File name
+- Capture comments
+- SHA256 hash
+- Capture interface
+- Number of packets
+- Capture start/end time
+
+Useful for verifying and documenting PCAP files.
+
+---
+
+Capturing Live Traffic
+
+Start capture:
+- Click the blue shark fin.
+- Select a network interface.
+
+Stop capture:
+- Click the red square.
+
+Restart capture:
+- Click the green restart button.
+
+The status bar shows:
+- Active interface
+- Total packets captured
+
+---
+
+Navigating Packets
+
+### Go to Packet
+
+Jump directly to a packet.
+
+Go to:
+**Go → Go to Packet**
+
+or press:
+
+`Ctrl + G`
+
+Enter the packet number.
+
+Useful when questions mention a specific packet.
+
+---
+
+Finding Packets
+
+Search for text, hex values, display filters, or regex.
+
+Go to:
+
+**Edit → Find Packet**
+
+or
+
+`Ctrl + F`
+
+Choose search type:
+- String
+- Hex
+- Display Filter
+- Regex
+
+Then choose where to search:
+- Packet List
+- Packet Details
+- Packet Bytes
+
+---
+
+Marking Packets
+
+Mark important packets for later.
+
+Right-click packet →
+
+**Mark Packet**
+
+Marked packets appear black.
+
+Marks disappear after closing the capture.
+
+---
+
+Packet Comments
+
+Add notes to packets.
+
+Right-click →
+
+**Packet Comment**
+
+Comments are saved inside the PCAP.
+
+Useful for investigations and teamwork.
+
+---
+
+Exporting Packets
+
+Save selected packets into another PCAP.
+
+Go to:
+
+**File → Export Specified Packets**
+
+Useful for sharing only suspicious traffic.
+
+---
+
+Export Objects
+
+Extract transferred files.
+
+Go to:
+
+**File → Export Objects**
+
+Supported protocols:
+- HTTP
+- SMB
+- TFTP
+- DICOM
+
+Useful for recovering downloaded files.
+
+---
+
+Time Display Format
+
+Default:
+- Seconds since capture started.
+
+Change it:
+
+**View → Time Display Format**
+
+Useful formats:
+- UTC Time
+- Local Time
+- Date & Time
+
+Makes timelines easier to understand.
+
+---
+
+Expert Information
+
+Shows possible problems in the capture.
+
+Open:
+
+**Analyze → Expert Information**
+
+Categories include:
+- Error
+- Warning
+- Note
+- Chat
+
+Useful for quickly spotting anomalies.
+
+---
+
+Packet Dissection
+
+Wireshark automatically decodes packets into protocol layers.
 
 Example:
 
-```
 Frame
- └── Ethernet
-      └── IPv4
-            └── TCP
-                  └── HTTP
-```
+→ Ethernet
+→ IPv4
+→ TCP
+→ HTTP
 
-Each protocol is encapsulated inside another protocol.
-
----
-
-# Common Protocols
-
-| Protocol | Purpose |
-|----------|---------|
-| Ethernet | Local network communication |
-| ARP | IP to MAC resolution |
-| IPv4 | Internet communication |
-| IPv6 | Next-generation IP |
-| TCP | Reliable communication |
-| UDP | Fast communication |
-| ICMP | Ping and diagnostics |
-| DNS | Domain name resolution |
-| HTTP | Web traffic |
-| HTTPS | Secure web traffic |
-| DHCP | Automatic IP assignment |
-| FTP | File transfer |
-| SMTP | Email sending |
-| POP3 | Email receiving |
-| IMAP | Email synchronization |
+Expand each layer to view protocol fields.
 
 ---
 
-# Packet Colors
+Following Streams
 
-Wireshark colorizes packets to improve readability.
+Reconstructs an entire conversation.
 
-Examples:
-- TCP
-- UDP
-- HTTP
-- DNS
-- Errors
-- Retransmissions
+Right-click packet →
 
-(Color rules can be customized.)
+**Follow → TCP Stream**
+
+or
+
+**Follow → HTTP Stream**
+
+or
+
+**Follow → UDP Stream**
+
+Useful for:
+- Viewing web pages
+- Reading HTTP requests
+- Finding usernames/passwords
+- Viewing transferred data
+
+Wireshark automatically applies a filter for that conversation.
 
 ---
 
-# Capture Filters
+Display Filters
 
-Capture filters reduce captured traffic.
+Display filters hide unwanted packets without changing the capture.
 
 Examples:
 
-Capture only HTTP:
+Show HTTP traffic
 
 ```
-port 80
+http
 ```
 
-Capture HTTPS:
-
-```
-port 443
-```
-
-Capture DNS:
-
-```
-port 53
-```
-
-Capture one host:
-
-```
-host 192.168.1.10
-```
-
-Capture TCP:
+Only TCP
 
 ```
 tcp
 ```
 
-Capture UDP:
+Only DNS
 
 ```
-udp
-```
-
----
-
-# Display Filters
-
-Display filters hide unwanted packets after capture.
-
-## IP Address
-
-```
-ip.addr == 192.168.1.5
+dns
 ```
 
 Source IP
 
 ```
-ip.src == 192.168.1.5
+ip.src == 192.168.1.10
 ```
 
 Destination IP
 
 ```
-ip.dst == 192.168.1.5
+ip.dst == 192.168.1.20
 ```
 
----
-
-## TCP
+Specific IP
 
 ```
-tcp
+ip.addr == 192.168.1.10
 ```
 
 TCP Port
@@ -205,38 +339,10 @@ TCP Port
 tcp.port == 80
 ```
 
-Source Port
-
-```
-tcp.srcport == 443
-```
-
-Destination Port
-
-```
-tcp.dstport == 80
-```
-
----
-
-## UDP
-
-```
-udp
-```
-
 UDP Port
 
 ```
 udp.port == 53
-```
-
----
-
-## HTTP
-
-```
-http
 ```
 
 HTTP GET
@@ -245,316 +351,85 @@ HTTP GET
 http.request.method == "GET"
 ```
 
-HTTP POST
+---
 
-```
-http.request.method == "POST"
-```
+Right-Click Filtering
+
+Instead of typing filters:
+
+Right-click any field →
+
+**Apply as Filter**
+
+Wireshark automatically generates the correct filter.
+
+Other options:
+- Prepare as Filter
+- Conversation Filter
+- Colorize Conversation
+- Apply as Column
 
 ---
 
-## DNS
+Conversation Filter
 
-```
-dns
-```
+Shows only packets belonging to one conversation.
 
-DNS Query
+Right-click packet →
 
-```
-dns.flags.response == 0
-```
+**Conversation Filter**
 
-DNS Response
-
-```
-dns.flags.response == 1
-```
+Useful when investigating communication between two hosts.
 
 ---
 
-## ICMP
+Colorize Conversation
 
-```
-icmp
-```
+Highlights packets in a conversation without hiding others.
 
----
+Right-click →
 
-## ARP
+**Colorize Conversation**
 
-```
-arp
-```
+Makes conversations easier to follow.
 
 ---
 
-## HTTPS (TLS)
+Apply as Column
 
-```
-tls
-```
+Adds any field as a new column.
 
-Older versions:
+Right-click a field →
 
-```
-ssl
-```
+**Apply as Column**
 
----
-
-# Useful Display Filters
-
-Contains string:
-
-```
-frame contains "password"
-```
-
-Contains text:
-
-```
-tcp contains "login"
-```
-
-Packet length:
-
-```
-frame.len > 500
-```
-
-TCP SYN packets:
-
-```
-tcp.flags.syn == 1 && tcp.flags.ack == 0
-```
-
-TCP Reset:
-
-```
-tcp.flags.reset == 1
-```
-
-HTTP Status Code:
-
-```
-http.response.code == 200
-```
-
----
-
-# Follow Streams
-
-Allows reconstruction of conversations.
-
-Options:
-- TCP Stream
-- UDP Stream
-- HTTP Stream
-
-Useful for:
-- Credentials
-- Commands
-- Files
-- Malware traffic
-
-Menu:
-
-```
-Right Click Packet
-→ Follow
-→ TCP Stream
-```
-
----
-
-# Statistics Menu
-
-Useful statistics include:
-
-Protocol Hierarchy
-- Shows protocol usage.
-
-Conversations
-- Displays communication between hosts.
-
-Endpoints
-- Lists devices in the capture.
-
-IO Graphs
-- Visualizes traffic over time.
-
-Flow Graph
-- Shows packet sequence.
-
----
-
-# Name Resolution
-
-Wireshark can resolve:
-
-- IP → Hostname
-- MAC → Vendor
-- Port → Service Name
-
----
-
-# Export Objects
-
-Extract files transferred over protocols.
-
-Menu:
-
-```
-File
-→ Export Objects
-```
-
-Supports:
-- HTTP
-- SMB
-- TFTP
-- DICOM
-
-Useful for malware analysis.
-
----
-
-# Packet Details
-
-Important fields:
-
-## Ethernet
-- Source MAC
-- Destination MAC
-
-## IPv4
-- Source IP
-- Destination IP
+Useful fields:
 - TTL
-- Protocol
-
-## TCP
-- Source Port
-- Destination Port
-- Sequence Number
-- ACK Number
-- Flags
-- Window Size
-
-## UDP
-- Source Port
-- Destination Port
+- Hostname
+- HTTP Status
+- TCP Window Size
 
 ---
 
-# Common TCP Flags
+Packet Flow
 
-| Flag | Meaning |
-|------|---------|
-| SYN | Start connection |
-| ACK | Acknowledgment |
-| FIN | Finish connection |
-| RST | Reset connection |
-| PSH | Push data |
-| URG | Urgent data |
-
----
-
-# Three-Way Handshake
-
-```
-Client          Server
-
-SYN --------->
-
-      <--------- SYN ACK
-
-ACK --------->
-```
-
-Connection established.
+1. Open a PCAP.
+2. Browse packets.
+3. Apply display filters.
+4. Inspect packet details.
+5. Follow streams.
+6. Export files if needed.
+7. Use Expert Info for warnings.
+8. Save findings.
 
 ---
 
-# Common Keyboard Shortcuts
+Key Points
 
-| Shortcut | Action |
-|----------|--------|
-| Ctrl + O | Open capture |
-| Ctrl + S | Save capture |
-| Ctrl + F | Find packet |
-| Ctrl + E | Start/Stop capture |
-| Ctrl + R | Reload capture |
-
----
-
-# Practical Workflow
-
-1. Open PCAP file.
-2. Apply display filters.
-3. Identify protocols.
-4. Follow streams.
-5. Check statistics.
-6. Export objects if needed.
-7. Document findings.
-
----
-
-# Wireshark Tips
-
-- Capture only necessary traffic.
-- Use display filters extensively.
-- Learn common protocol ports.
-- Save important captures.
-- Colorize suspicious traffic.
-- Inspect packet details layer by layer.
-- Use Follow Stream for application data.
-- Use Statistics to identify anomalies.
-
----
-
-# Common Ports
-
-| Port | Protocol |
-|------|----------|
-| 20/21 | FTP |
-| 22 | SSH |
-| 23 | Telnet |
-| 25 | SMTP |
-| 53 | DNS |
-| 67/68 | DHCP |
-| 69 | TFTP |
-| 80 | HTTP |
-| 110 | POP3 |
-| 143 | IMAP |
-| 161 | SNMP |
-| 389 | LDAP |
-| 443 | HTTPS |
-| 445 | SMB |
-| 993 | IMAPS |
-| 995 | POP3S |
-
----
-
-# Exam Tips
-
-- Capture filters are applied **before** capturing.
-- Display filters are applied **after** capturing.
-- Wireshark does **not** modify packets; it only captures and analyzes them.
-- Packet analysis follows the encapsulation model (Ethernet → IP → TCP/UDP → Application).
+- Wireshark analyzes packets; it does not modify them.
+- Capture filters work before capturing.
+- Display filters work after capturing.
+- Packet numbers make navigation easier.
 - Follow Stream reconstructs complete conversations.
-- Protocol Hierarchy provides an overview of protocols in the capture.
 - Export Objects can recover transferred files.
-- Display filters are one of the most important features to master.
-
----
-**Room:** TryHackMe - Wireshark: The Basics  
-**Difficulty:** Easy  
-**Key Skills:** Packet Analysis, Network Troubleshooting, Protocol Identification, Display Filters, Capture Filters
-````
-
-
-
-
-
+- Capture File Properties provide hashes, comments, and statistics.
