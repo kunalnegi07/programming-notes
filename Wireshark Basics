@@ -1,37 +1,558 @@
-Wireshark is an open-source, cross-platform network packet analyser tool capable of sniffing and investigating live traffic and inspecting packet captures (PCAP).
-Wireshark is one of the most potent traffic analyser tools available in the wild. There are multiple purposes for its use:
-Detecting and troubleshooting network problems, such as network load failure points and congestion.
-Detecting security anomalies, such as rogue hosts, abnormal port usage, and suspicious traffic.
-Investigating and learning protocol details, such as response codes and payload data.
-Wireshark is not an Intrusion Detection System (IDS). It only allows analysts to discover and investigate the packets in depth.
-It also doesn't modify packets; it reads them. Hence, detecting any anomaly or network problem highly relies on the analyst's knowledge and investigation skills
-GUI and Data--
-Wireshark GUI opens with a single all-in-one page, which helps users investigate the traffic in multiple ways. At first glance, five sections stand out.
-Toolbar	The main toolbar contains multiple menus and shortcuts for packet sniffing and processing, including filtering, sorting, summarising, exporting and merging. 
-Display Filter Bar	The main query and filtering section.
-Recent Files	List of the recently investigated files. You can recall listed files with a double-click. 
-Capture Filter and Interfaces	Capture filters and available sniffing points (network interfaces).  The network interface is the connection point between a computer and a network. The software connection (e.g., lo, eth0 and ens33) enables networking hardware.
-Status Bar	Tool status, profile and numeric packet information.
-Loading PCAP Files
-The above picture shows Wireshark's empty interface. The only available information is the recently processed http1.pcap file.
-Let's load that file and see Wireshark's detailed packet presentation. Note that you can also use the "File" menu, dragging and dropping the file, or double-clicking on the file to load a pcap.
-Now, we can see the processed filename, detailed number of packets and packet details. Packet details are shown in three different panes, which allow us to discover them in different formats. 
-Packet List Pane	Summary of each packet (source and destination addresses, protocol, and packet info). You can click on the list to choose a packet for further investigation. Once you select a packet, the details will appear in the other panels.
-Packet Details Panel	Detailed protocol breakdown of the selected packet.
-Packet Bytes Pane	Hex and decoded ASCII representation of the selected packet. It highlights the packet field depending on the clicked section in the details pane.
-Along with quick packet information, Wireshark also colour packets in order of different conditions and the protocol to spot anomalies and protocols in captures quickly (this explains why almost everything is green in the given screenshots). 
-This glance at packet information can help track down exactly what you're looking for during analysis. You can create custom colour rules to spot events of interest by using display filters
-Wireshark has two types of packet colouring methods: temporary rules that are only available during a program session and permanent rules that are saved under the preference file (profile) and available for the next program session.
-You can use the "right-click menu" or "View --> Coloring Rules" menu to create permanent colouring rules. The "Colourise Packet List" menu activates/deactivates the colouring rules. Temporary packet colouring is done with the "right-click menu" or "View --> Conversation Filter" menu
-Traffic sniffing--
-You can use the blue "shark button" to start network sniffing (capturing traffic), the red button will stop the sniffing, and the green button will restart the sniffing process. The status bar will also provide the used sniffing interface and the number of collected packets.
-Merge PCAP Files
-Wireshark can combine two pcap files into one single file. You can use the "File --> Merge" menu path to merge a pcap with the processed one. When you choose the second file, Wireshark will show the total number of packets in the selected file. Once you click "open",
-it will merge the existing pcap file with the chosen one and create a new pcap file. Note that you need to save the "merged" pcap file before working on it.
-View File Details
-Knowing the file details is helpful. Especially when working with multiple pcap files, sometimes you will need to know and recall the file details (File hash, capture time, capture file comments, interface and statistics) to identify the file, classify and prioritise it.
-You can view the details by following "Statistics --> Capture File Properties" or by clicking the "pcap icon located on the left bottom".
+````markdown
+# TryHackMe - Wireshark Basics Notes
 
+# What is Wireshark?
+Wireshark is a free and open-source network protocol analyzer used to capture and inspect network traffic in real time. It is one of the most widely used tools for network troubleshooting, cybersecurity, malware analysis, and penetration testing.
+
+---
+
+# Uses of Wireshark
+- Network troubleshooting
+- Packet analysis
+- Security monitoring
+- Malware traffic analysis
+- Protocol learning
+- Incident response
+- Digital forensics
+
+---
+
+# Packet Capture Process
+1. Select a network interface.
+2. Start capturing packets.
+3. Generate or observe network traffic.
+4. Stop the capture.
+5. Analyze packets using filters.
+
+---
+
+# Main Interface Components
+
+## Menu Bar
+Contains options for opening, saving, exporting captures, preferences, etc.
+
+## Toolbar
+Quick access to common functions such as Start, Stop, Restart Capture.
+
+## Display Filter Bar
+Filters displayed packets without changing the original capture.
+
+Example:
+```
+http
+```
+
+---
+
+## Packet List Pane
+Displays captured packets with:
+- Packet Number
+- Time
+- Source IP
+- Destination IP
+- Protocol
+- Length
+- Info
+
+---
+
+## Packet Details Pane
+Shows protocol layers:
+- Frame
+- Ethernet
+- IP
+- TCP/UDP
+- Application Protocol
+
+---
+
+## Packet Bytes Pane
+Displays raw packet data in hexadecimal and ASCII.
+
+---
+
+# Packet Structure
+
+Example:
+
+```
+Frame
+ └── Ethernet
+      └── IPv4
+            └── TCP
+                  └── HTTP
+```
+
+Each protocol is encapsulated inside another protocol.
+
+---
+
+# Common Protocols
+
+| Protocol | Purpose |
+|----------|---------|
+| Ethernet | Local network communication |
+| ARP | IP to MAC resolution |
+| IPv4 | Internet communication |
+| IPv6 | Next-generation IP |
+| TCP | Reliable communication |
+| UDP | Fast communication |
+| ICMP | Ping and diagnostics |
+| DNS | Domain name resolution |
+| HTTP | Web traffic |
+| HTTPS | Secure web traffic |
+| DHCP | Automatic IP assignment |
+| FTP | File transfer |
+| SMTP | Email sending |
+| POP3 | Email receiving |
+| IMAP | Email synchronization |
+
+---
+
+# Packet Colors
+
+Wireshark colorizes packets to improve readability.
+
+Examples:
+- TCP
+- UDP
+- HTTP
+- DNS
+- Errors
+- Retransmissions
+
+(Color rules can be customized.)
+
+---
+
+# Capture Filters
+
+Capture filters reduce captured traffic.
+
+Examples:
+
+Capture only HTTP:
+
+```
+port 80
+```
+
+Capture HTTPS:
+
+```
+port 443
+```
+
+Capture DNS:
+
+```
+port 53
+```
+
+Capture one host:
+
+```
+host 192.168.1.10
+```
+
+Capture TCP:
+
+```
+tcp
+```
+
+Capture UDP:
+
+```
+udp
+```
+
+---
+
+# Display Filters
+
+Display filters hide unwanted packets after capture.
+
+## IP Address
+
+```
+ip.addr == 192.168.1.5
+```
+
+Source IP
+
+```
+ip.src == 192.168.1.5
+```
+
+Destination IP
+
+```
+ip.dst == 192.168.1.5
+```
+
+---
+
+## TCP
+
+```
+tcp
+```
+
+TCP Port
+
+```
+tcp.port == 80
+```
+
+Source Port
+
+```
+tcp.srcport == 443
+```
+
+Destination Port
+
+```
+tcp.dstport == 80
+```
+
+---
+
+## UDP
+
+```
+udp
+```
+
+UDP Port
+
+```
+udp.port == 53
+```
+
+---
+
+## HTTP
+
+```
+http
+```
+
+HTTP GET
+
+```
+http.request.method == "GET"
+```
+
+HTTP POST
+
+```
+http.request.method == "POST"
+```
+
+---
+
+## DNS
+
+```
+dns
+```
+
+DNS Query
+
+```
+dns.flags.response == 0
+```
+
+DNS Response
+
+```
+dns.flags.response == 1
+```
+
+---
+
+## ICMP
+
+```
+icmp
+```
+
+---
+
+## ARP
+
+```
+arp
+```
+
+---
+
+## HTTPS (TLS)
+
+```
+tls
+```
+
+Older versions:
+
+```
+ssl
+```
+
+---
+
+# Useful Display Filters
+
+Contains string:
+
+```
+frame contains "password"
+```
+
+Contains text:
+
+```
+tcp contains "login"
+```
+
+Packet length:
+
+```
+frame.len > 500
+```
+
+TCP SYN packets:
+
+```
+tcp.flags.syn == 1 && tcp.flags.ack == 0
+```
+
+TCP Reset:
+
+```
+tcp.flags.reset == 1
+```
+
+HTTP Status Code:
+
+```
+http.response.code == 200
+```
+
+---
+
+# Follow Streams
+
+Allows reconstruction of conversations.
+
+Options:
+- TCP Stream
+- UDP Stream
+- HTTP Stream
+
+Useful for:
+- Credentials
+- Commands
+- Files
+- Malware traffic
+
+Menu:
+
+```
+Right Click Packet
+→ Follow
+→ TCP Stream
+```
+
+---
+
+# Statistics Menu
+
+Useful statistics include:
+
+Protocol Hierarchy
+- Shows protocol usage.
+
+Conversations
+- Displays communication between hosts.
+
+Endpoints
+- Lists devices in the capture.
+
+IO Graphs
+- Visualizes traffic over time.
+
+Flow Graph
+- Shows packet sequence.
+
+---
+
+# Name Resolution
+
+Wireshark can resolve:
+
+- IP → Hostname
+- MAC → Vendor
+- Port → Service Name
+
+---
+
+# Export Objects
+
+Extract files transferred over protocols.
+
+Menu:
+
+```
+File
+→ Export Objects
+```
+
+Supports:
+- HTTP
+- SMB
+- TFTP
+- DICOM
+
+Useful for malware analysis.
+
+---
+
+# Packet Details
+
+Important fields:
+
+## Ethernet
+- Source MAC
+- Destination MAC
+
+## IPv4
+- Source IP
+- Destination IP
+- TTL
+- Protocol
+
+## TCP
+- Source Port
+- Destination Port
+- Sequence Number
+- ACK Number
+- Flags
+- Window Size
+
+## UDP
+- Source Port
+- Destination Port
+
+---
+
+# Common TCP Flags
+
+| Flag | Meaning |
+|------|---------|
+| SYN | Start connection |
+| ACK | Acknowledgment |
+| FIN | Finish connection |
+| RST | Reset connection |
+| PSH | Push data |
+| URG | Urgent data |
+
+---
+
+# Three-Way Handshake
+
+```
+Client          Server
+
+SYN --------->
+
+      <--------- SYN ACK
+
+ACK --------->
+```
+
+Connection established.
+
+---
+
+# Common Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| Ctrl + O | Open capture |
+| Ctrl + S | Save capture |
+| Ctrl + F | Find packet |
+| Ctrl + E | Start/Stop capture |
+| Ctrl + R | Reload capture |
+
+---
+
+# Practical Workflow
+
+1. Open PCAP file.
+2. Apply display filters.
+3. Identify protocols.
+4. Follow streams.
+5. Check statistics.
+6. Export objects if needed.
+7. Document findings.
+
+---
+
+# Wireshark Tips
+
+- Capture only necessary traffic.
+- Use display filters extensively.
+- Learn common protocol ports.
+- Save important captures.
+- Colorize suspicious traffic.
+- Inspect packet details layer by layer.
+- Use Follow Stream for application data.
+- Use Statistics to identify anomalies.
+
+---
+
+# Common Ports
+
+| Port | Protocol |
+|------|----------|
+| 20/21 | FTP |
+| 22 | SSH |
+| 23 | Telnet |
+| 25 | SMTP |
+| 53 | DNS |
+| 67/68 | DHCP |
+| 69 | TFTP |
+| 80 | HTTP |
+| 110 | POP3 |
+| 143 | IMAP |
+| 161 | SNMP |
+| 389 | LDAP |
+| 443 | HTTPS |
+| 445 | SMB |
+| 993 | IMAPS |
+| 995 | POP3S |
+
+---
+
+# Exam Tips
+
+- Capture filters are applied **before** capturing.
+- Display filters are applied **after** capturing.
+- Wireshark does **not** modify packets; it only captures and analyzes them.
+- Packet analysis follows the encapsulation model (Ethernet → IP → TCP/UDP → Application).
+- Follow Stream reconstructs complete conversations.
+- Protocol Hierarchy provides an overview of protocols in the capture.
+- Export Objects can recover transferred files.
+- Display filters are one of the most important features to master.
+
+---
+**Room:** TryHackMe - Wireshark: The Basics  
+**Difficulty:** Easy  
+**Key Skills:** Packet Analysis, Network Troubleshooting, Protocol Identification, Display Filters, Capture Filters
+````
 
 
 
