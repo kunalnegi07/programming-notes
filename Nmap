@@ -1,1 +1,54 @@
+Imagine the scenario where you are connected to a network and using various network resources, such as email and web browsing.
+Two questions arise. The first is how we can discover other live devices on this network or on other networks. The second is how we can find out the network services running on these live devices; examples include SSH and web servers
+One approach is to do it manually. If asked to uncover which devices are live on the 192.168.0.1/24 network, one can use basic tools such as ping, arp-scan, or some other tool to check the 254 IP addresses. Although this network has 256 IP addresses, 
+we counted 254 IP addresses because two are reserved. Each tool has its limitations. For example, ping won’t give any information if the target system’s firewall blocks ICMP traffic. Moreover, arp-scan only works if your device is connected to the same network, i.e., over Ethernet or WiFi. In brief, this will be a significant waste of time without an advanced and reliable tool. With the right tools and enough time, one would have a list of the live hosts on a target network. We need a flexible tool that can handle the various scenarios.
+A very efficient solution that can solve the above two requirements and many more is the Nmap(opens in new tab) network scanner. Nmap is an open-source network scanner that was first published in 1997. Since then, plenty of features and options have been added. It is a powerful and flexible network scanner that can be adapted to various scenarios and setups
+
+Host Discovery: Who is online---
+IP range using -: If you want to scan all the IP addresses from 192.168.0.1 to 192.168.0.10, you can write 192.168.0.1-10
+IP subnet using /: If you want to scan a subnet, you can express it as 192.168.0.1/24, and this would be equivalent to 192.168.0.0-255
+Hostname: You can also specify your target by hostname, for example, example.thm
+Let’s say you want to discover the online hosts on a network. Nmap offers the -sn option, i.e., ping scan. However, don’t expect this to be limited like ping
+Scanning a “Local” Network--
+In this context, we use the term “local” to refer to the network we are directly connected to, such as an Ethernet or WiFi network. In the first demonstration, we will scan the WiFi network to which we are connected. Our IP address is 192.168.66.89, and we are scanning the 192.168.66.0/24 network. The nmap -sn 192.168.66.0/24 command and its output are shown in the terminal below.
+ex - nmap -sn 192.168.66.0/24
+Starting Nmap 7.92 ( https://nmap.org ) at 2024-08-07 13:49 EEST
+Nmap scan report for XiaoQiang (192.168.66.1)
+Host is up (0.0069s latency).
+MAC Address: 44:DF:65:D8:FE:6C (Unknown)
+Nmap scan report for S190023240007 (192.168.66.88)
+Host is up (0.090s latency).
+MAC Address: 7C:DF:A1:D3:8C:5C (Espressif)
+Nmap scan report for wlan0 (192.168.66.97)
+Host is up (0.20s latency).
+MAC Address: 10:D5:61:E2:18:E6 (Tuya Smart)
+Nmap scan report for 192.168.66.179
+Host is up (0.10s latency).
+MAC Address: E4:AA:EC:8F:88:C9 (Tianjin Hualai Technology)
+[...]
+Nmap done: 256 IP addresses (7 hosts up) scanned in 2.64 seconds
+Because we are scanning the local network, where we are connected via Ethernet or WiFi, we can look up the MAC addresses of the devices. Consequently, we can figure out the network card vendors, which is beneficial information as it can help us guess the type of target device(s).
+When scanning a directly connected network, Nmap starts by sending ARP requests. When a device responds to the ARP request, Nmap labels it with “Host is up”.
+Scanning a “Remote” Network--
+Consider the case of a “remote” network. In this context, “remote” means that at least one router separates our system from this network. As a result, all our traffic to the target systems must go through one or more routers. Unlike scanning a local network, we cannot send an ARP request to the target.
+It is worth noting that we can have more control over how Nmap discovers live hosts such as -PS[portlist], -PA[portlist], -PU[portlist] for TCP SYN, TCP ACK, and UDP discovery via the given ports
+As a final point, Nmap offers a list scan with the option -sL. This scan only lists the targets to scan without actually scanning them. For example, nmap -sL 192.168.0.1/24 will list the 256 targets that will be scanned. This option helps confirm the targets before running the actual scan.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
