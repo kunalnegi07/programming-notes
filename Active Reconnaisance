@@ -1,1 +1,114 @@
+Active reconnaissance is the process of directly interacting with a target system or network to gather information about it. 
+Passive reconnaissance collects data from public sources without sending any traffic to the target. Active reconnaissance, by contrast, requires transmitting packets, making connections, and probing services. The distinction matters because active techniques leave traces in the form of log entries, IDS alerts, WAF blocks, and honeypot triggers.
+Active reconnaissance is riskier and more detectable than it has ever been. Most organisations deploy CDNs such as Cloudflare and Akamai alongside WAFs and zero-trust models that log or outright block unusual probes. IPv6 adoption means many hosts respond to ping6 but filter ICMPv4. HTTPS dominates web traffic,
+making plaintext protocols largely obsolete for web interactions. On the defensive side, SIEMs, EDR solutions, and cloud-native monitoring detect reconnaissance patterns quickly and reliably.
+
+Web Browser---
+The web browser is one of the most convenient and least suspicious tools for active reconnaissance. It is present on virtually every system, and its traffic blends in with normal user activity. This makes it difficult for defenders to distinguish reconnaissance from legitimate browsing
+Transport Level Basics--
+Browsers connect to TCP port 80 by default for plain HTTP, though this is now rare because almost all sites automatically redirect to HTTPS. TCP port 443 is the standard for HTTPS and is used by nearly all websites today.
+Many modern sites also support HTTP/3, which uses the QUIC protocol. QUIC is a transport protocol originally developed by Google that combines the functions of TCP and TLS into a single protocol running over UDP port 443. The result is faster and more reliable connections than traditional TCP+TLS. You can identify HTTP/3 traffic in the browser's Network tab, where the protocol column displays h3
+You can access services on non-standard ports by specifying them explicitly in the URL. For example, navigating to https://target.com:8443/ or http://192.168.1.100:8080/ will cause the browser to attempt a connection on that port. If a web server is listening, the page will load.
+Press Ctrl + Shift + I on Windows and Linux, or Option + Command + I on macOS, in Firefox, Chrome, Edge, or most Chromium-based browsers to open Developer Tools. Several of the tabs available are directly useful for reconnaissance.
+The Network tab displays all requests and responses in real time. This includes request and response headers such as Server, X-Powered-By, and Content-Security-Policy, along with timing data, status codes, and cookies sent and received.
+The Console tab allows you to execute JavaScript snippets directly in the page context, view errors, and interact with the DOM.
+The Sources tab lets you browse JavaScript, CSS, and HTML files loaded by the page. This is one of the most practical reconnaissance techniques available through the browser. JavaScript source files frequently contain hardcoded API endpoints, directory structures, references to internal services, and developer comments that were never intended to be public. Inspecting these files can surface information that is invisible in the rendered page. You will use this technique in the questions below.
+The Application tab, under the Storage section, lets you inspect cookies, Local Storage, and Session Storage. These storage areas sometimes contain session tokens, API keys accidentally exposed client-side, tracking IDs, or authentication data.
+The Security tab provides certificate details including the issuer, validity period, and Subject Alternative Names (SANs). SANs frequently reveal additional subdomains or related domains belonging to the same organisation.
+Browser Extensions--
+FoxyProxy(opens in new tab) allows you to switch between proxies such as Burp Suite, ZAP, and SOCKS5 tunnels. This is useful when intercepting or routing traffic through different tools during an engagement.
+User-Agent Switcher and Manager(opens in new tab) changes the User-Agent string to emulate different browsers, operating systems, or devices. You can present as mobile Safari or an older browser version to discover mobile-specific endpoints or version-specific behaviour. However, many modern WAFs and CDNs detect suspicious or rapid User-Agent changes.
+Wappalyzer(opens in new tab) automatically identifies technologies used on the site, including CMS platforms, web servers, JavaScript frameworks, analytics tools, CDNs, and databases. It runs passively while you browse and is one of the most widely used extensions for quick technology fingerprinting.
+Other useful alternatives include BuiltWith Technology Profiler, which is similar to Wappalyzer but sometimes detects different technologies, WhatRuns as a lightweight alternative, and Library Detector for Chrome/Firefox, which focuses specifically on JavaScript libraries and frameworks. 
+
+PING---
+How Ping Works
+Ping uses the ICMP protocol (Internet Control Message Protocol). It sends an ICMP Echo Request packet (type 8). If the target receives the packet and is permitted to answer, it sends back an ICMP Echo Reply (type 0). This exchange is very lightweight and fast, which is why ping became the standard first check before spending time on more detailed scanning.
+ex--use the -c flag to specify the number of packets to send.
+ping -c 5 10.48.159.136
+You can also ping a hostname, in which case DNS resolution happens first.
+ping -c 5 tryhackme.com
+On Windows, the equivalent flag is -n.
+ping -n 5 10.48.159.136
+If you omit the count on Linux, ping runs indefinitely. Press Ctrl+C to stop it
+You can force a specific IP version using the -4 and -6 flags. This is useful in dual-stack environments where a hostname resolves to both IPv4 and IPv6 addresses. On some systems, ping6 is available as a standalone command for IPv6.
+ping -4 -c 5 10.48.159.136
+ping -6 -c 5 MACHINE_IPV6
+Interpreting the Output: No Reply--
+ex-user@AttackBox$ ping -c 5 10.48.159.136
+PING 10.48.159.136 (10.48.159.136) 56(84) bytes of data.
+From ATTACKBOX_IP icmp_seq=1 Destination Host Unreachable
+From ATTACKBOX_IP icmp_seq=2 Destination Host Unreachable
+From ATTACKBOX_IP icmp_seq=3 Destination Host Unreachable
+From ATTACKBOX_IP icmp_seq=4 Destination Host Unreachable
+From ATTACKBOX_IP icmp_seq=5 Destination Host Unreachable
+
+--- 10.48.159.136 ping statistics ---
+5 packets transmitted, 0 received, +5 errors, 100% packet loss, time 4098ms
+There are several common reasons for receiving no reply. The lab machine may be powered off, crashed, or still booting. A router or firewall along the path may be blocking ICMP Echo Requests. The target may be behind NAT that drops ICMP. Windows Firewall blocks ping by default on most versions. Corporate firewalls, cloud providers such as AWS, Azure, and GCP, and modern WAFs and CDNs frequently block ICMP completely. Your own network or machine may also be blocking outgoing ICMP
+
+Traceroute---
+The traceroute command traces the route that packets take from your system to a target host. Its purpose is to discover the IP addresses of the routers (hops) along the path and to determine how many of them sit between you and the destination. This information is useful for understanding network topology, identifying where filtering or latency occurs, and mapping infrastructure.
+However, the route packets take is not fixed. Many routers use dynamic routing protocols such as BGP or OSPF that adapt to network changes. Modern networks also employ load balancing and anycast routing, meaning packets can take different paths even in consecutive runs of the same command.
+On Linux and macOS, the command is traceroute 10.48.159.136. On Windows, it is tracert 10.48.159.136. For IPv6, use traceroute -6 MACHINE_IPV6 or the standalone traceroute6 command.
+There is no direct way to discover the full path from your system to a target. Instead, traceroute exploits the TTL (Time To Live) field in the IP header. Each router that handles a packet decrements the TTL by one before forwarding it. When the TTL reaches 0, the router drops the packet and sends an ICMP Time-to-Live Exceeded message back to the sender
+Some routers are configured not to send ICMP Time-to-Live Exceeded messages. This is common in secure environments intended to prevent reconnaissance. These routers appear as * in the traceroute output
+On Linux, traceroute sends UDP datagrams by default. To switch to TCP-based tracing, which is useful for bypassing UDP filters, use traceroute -T 10.48.159.136. For ICMP-based tracing, use traceroute -I 10.48.159.136.
+The number of hops between your system and the target depends on when you run the command. There is no guarantee that packets will follow the same route, even within a short time window, because load balancing, failover mechanisms, and dynamic routing updates can all alter the path. Some routers return public IP addresses that you might examine depending on the scope of your engagement, though these may belong to third parties. Some routers do not return a reply at all, which could be due to rate limiting, firewall rules, or configurations that suppress ICMP responses.
+Use mtr 10.48.159.136 (My Traceroute) for a real-time, continuous view that combines traceroute with ping-like statistics, showing packet loss and latency per hop
+
+Telnet---
+Despite its security shortcomings, the telnet client has a useful property for reconnaissance. Because it operates over TCP, you can use it to connect to any TCP port and observe the server's response. This technique is known as banner grabbing. You connect to a service and read the initial response, called the "banner", that the server sends back. Banners frequently reveal the software name and version running on that port.
+If telnet is not installed on your system, you can install it on Debian and Ubuntu with apt install telnet. However, netcat (nc) and curl are generally preferred alternatives that provide similar functionality with more flexibility.
+The example below demonstrates banner grabbing against a web server on port 80. You connect with telnet 10.48.159.136 80, then issue a minimal HTTP request. The command GET / HTTP/1.1 followed by host: example and two presses of the Enter key is sufficient to elicit a response.
+The field of interest here is Server: nginx/1.6.2, which reveals the type and version of the web server software. This is exactly the kind of information that active reconnaissance aims to uncover. Software versions can be cross-referenced against known vulnerabilities in databases such as CVE and Exploit-DB.
+This same banner-grabbing technique works against any TCP-based service. If you connect to a mail server, you would use SMTP or POP3 commands instead of HTTP. If you connect to an FTP server on port 21, the server typically sends its banner immediately upon connection without requiring any commands at all. The underlying principle is always the same. Connect to the port, read what the server sends back, and optionally issue protocol-specific commands to extract further information.
+In modern environments, many services enforce encryption. For example, SMTPS runs on port 465, and HTTPS runs on port 443. Telnet cannot handle encrypted connections. For HTTPS, use curl --head https://10.48.159.136 or openssl s_client -connect 10.48.159.136:443. For other TLS-wrapped services, openssl s_client or ncat --ssl are the appropriate tools.
+
+Netcat---
+Netcat (or simply nc) is a versatile networking utility that supports both TCP and UDP protocols. It can function as a client that connects to a listening port, or as a server that listens on a port of your choice. This dual capability makes it useful for banner grabbing, port probing, simple file transfers, and basic client-server communication. Modern versions such as ncat from the Nmap project also support IPv6 and SSL encryption, making it more versatile than legacy tools like telnet.
+Banner Grabbing with Netcat--
+The banner-grabbing technique described in the previous task works identically with nc. The syntax is nc 10.48.180.182 PORT. You connect to the target port, then issue protocol-appropriate commands to read the server's response. Note that you might need to press Shift+Enter after the GET line.
+This same approach applies to any TCP-based service. Connecting to an FTP server on port 21 with nc 10.48.180.182 21 will typically produce an immediate banner showing the FTP server software and version without requiring any commands. Connecting to an SMTP server on port 25 produces a banner identifying the mail server. The principle is consistent across protocols. Connect, read the banner, and optionally issue protocol-specific commands.
+Listening with Netcat--
+On the server system, run nc -vnlp 1234 to start listening on port 1234. On the client system, run nc 10.48.180.182 1234 to connect. Once the connection is established, any text typed on one side is transmitted to the other
+Option	Meaning
+-l	Listen mode
+-p	Specify the port number
+-n	Numeric only; no DNS resolution of hostnames
+-v	Verbose output, useful for debugging
+-vv	Very verbose output
+-k	Keep listening after the client disconnects
+The -p flag must appear directly before the port number. The -n flag avoids DNS lookups and associated warnings. Port numbers below 1024 require root privileges to listen on. For IPv6 listening, add the -6 flag with nc -6 -lp 1234. If you need encryption for sensitive data transfer, use ncat --ssl or pair nc with a tool like stunnel.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
