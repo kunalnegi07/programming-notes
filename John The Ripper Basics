@@ -1,1 +1,58 @@
+In computer science, P and NP are two classes of problems that help us understand the efficiency of algorithms:
+P (Polynomial Time): Class P covers the problems whose solution can be found in polynomial time. Consider sorting a list in increasing order. The longer the list, the longer it would take to sort; however, the increase in time is not exponential.
+NP (Non-deterministic Polynomial Time): Problems in the class NP are those for which a given solution can be checked quickly, even though finding the solution itself might be hard. In fact, we don’t know if there is a fast algorithm to find the solution in the first place.
+the algorithm to hash the value will be “P” and can, therefore, be calculated reasonably. However, an “un-hashing” algorithm would be “NP” and intractable to solve, meaning that it cannot be computed in a reasonable time using standard computers.
+Where John Comes in--
+Even though the algorithm is not feasibly reversible, that doesn’t mean cracking the hashes is impossible. If you have the hashed version of a password, for example, and you know the hashing algorithm, you can use that hashing algorithm to hash a large number of words, called a dictionary. You can then compare these hashes to the one you’re trying to crack to see if they match. If they do, you know what word corresponds to that hash- you’ve cracked it!
+This process is called a dictionary attack, and John the Ripper, or John as it’s commonly shortened, is a tool for conducting fast brute force attacks on various hash types.
+the most popular extended version of John the Ripper, Jumbo John.
+to use a dictionary attack against hashes, you need a list of words to hash and compare; unsurprisingly, this is called a wordlist. There are many different wordlists out there, and a good collection can be found in the SecLists(opens in new tab) repository
+If you are not using any of the above distributions, you can get the rockyou.txt wordlist from the SecLists(opens in new tab) repository under the /Passwords/Leaked-Databases subsection. You may need to extract it from the .tar.gz format using tar xvzf rockyou.txt.tar.gz.
+
+Cracking Basic Hashes---
+ohn Basic Syntax
+The basic syntax of John the Ripper commands is as follows. We will cover the specific options and modifiers used as we use them.
+
+john [options] [file path]
+
+john: Invokes the John the Ripper program
+[options]: Specifies the options you want to use
+[file path]: The file containing the hash you’re trying to crack; if it’s in the same directory, you won’t need to name a path, just the file.
+Automatic Cracking--
+John has built-in features to detect what type of hash it’s being given and to select appropriate rules and formats to crack it for you; this isn’t always the best idea as it can be unreliable, but if you can’t identify what hash type you’re working with and want to try cracking it, it can be a good option! To do this, we use the following syntax:
+
+john --wordlist=[path to wordlist] [path to file]
+
+--wordlist=: Specifies using wordlist mode, reading from the file that you supply in the provided path
+[path to wordlist]: The path to the wordlist you’re using, as described in the previous task
+ex- john --wordlist=/usr/share/wordlists/rockyou.txt hash_to_crack.txt
+Identifying Hashes--
+There are multiple ways to do this, such as using an online hash identifier like this site(opens in new tab). I like to use a tool called hash-identifier(opens in new tab), a Python tool that is super easy to use and will tell you what different types of hashes the one you enter is likely to be, giving you more options if the first one fails.
+To use hash-identifier, you can use wget or curl to download the Python file hash-id.py from its GitLab page(opens in new tab). Then, launch it with python3 hash-id.py and enter the hash you’re trying to identify. 
+Format-Specific Cracking--
+john --format=[format] --wordlist=[path to wordlist] [path to file]
+--format=: This is the flag to tell John that you’re giving it a hash of a specific format and to use the following format to crack it
+[format]: The format that the hash is in
+john --format=raw-md5 --wordlist=/usr/share/wordlists/rockyou.txt hash_to_crack.txt
+When you tell John to use formats, if you’re dealing with a standard hash type, e.g. md5 as in the example above, you have to prefix it with raw- to tell John you’re just dealing with a standard hash type, though this doesn’t always apply. To check if you need to add the prefix or not, you can list all of John’s formats using john --list=formats and either check manually or grep for your hash type using something like john --list=formats | grep -iF "md5".
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
