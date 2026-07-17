@@ -16,8 +16,53 @@ Event log: The Event log provides information about the actions performed by Bur
 Issue Activity: This section is specific to Burp Suite Professional. It displays the vulnerabilities identified by the automated scanner, ranked by severity and filterable based on the certainty of the vulnerability.
 Advisory: The Advisory section provides more detailed information about the identified vulnerabilities, including references and suggested remediations. This information can be exported into a report. In Burp Suite Community, this section may not show any vulnerabilities.
 
+Navigation---
+Module Selection: The top row of the menu bar displays the available modules in Burp Suite. You can click on each module to switch between them. For example, the Burp Proxy module is selected in the image below.
+Sub-Tabs: If a selected module has multiple sub-tabs, they can be accessed through the second menu bar that appears directly below the main menu bar. These sub-tabs often contain module-specific settings and options. For example, in the image above, the Proxy Intercept sub-tab is selected within the Burp Proxy module.
+Detaching Tabs: If you prefer to view multiple tabs separately, you can detach them into separate windows. To do this, go to the Window option in the application menu above the Module Selection bar. From there, choose the "Detach" option, and the selected tab will open in a separate window. The detached tabs can be reattached using the same method.
+Burp Suite also provides keyboard shortcuts for quick navigation to key tabs. By default, the following shortcuts are available:
+Shortcut	Tab
+Ctrl + Shift + D	Dashboard
+Ctrl + Shift + T	Target tab
+Ctrl + Shift + P	Proxy tab
+Ctrl + Shift + I	Intruder tab
+Ctrl + Shift + R	Repeater tab
 
+Options---
+here are two types of settings: Global settings (also known as User settings) and Project settings.
+Global Settings: These settings affect the entire Burp Suite installation and are applied every time you start the application. They provide a baseline configuration for your Burp Suite environment.
+Project Settings: These settings are specific to the current project and apply only during the session. However, please note that Burp Suite Community Edition does not support saving projects, so any project-specific options will be lost when you close Burp
+To access the settings, click on the Settings button in the top navigation bar. This will open a separate settings window.
+In the Settings window, you will find a menu on the left-hand side. This menu allows you to switch between different types of settings, including:
+Search: Enables searching for specific settings using keywords.
+Type filter: Filters the settings for User and Project options.
+User settings: Shows settings that affect the entire Burp Suite installation.
+Project settings: Displays settings specific to the current project.
+Categories: Allows selecting settings by category
+It's worth noting that many tools within Burp Suite provide shortcuts to specific categories of settings. For example, the Proxy module includes a Proxy settings button that opens the settings window directly to the relevant proxy section.
 
+Introduction to the burp proxy---
+Key Points to Understand About the Burp Proxy
+Intercepting Requests: When requests are made through the Burp Proxy, they are intercepted and held back from reaching the target server. The requests appear in the Proxy tab, allowing for further actions such as forwarding, dropping, editing, or sending them to other Burp modules. To disable the intercept and allow requests to pass through the proxy without interruption, click the Intercept is on button.
+Taking Control: The ability to intercept requests empowers testers to gain complete control over web traffic, making it invaluable for testing web applications.
+Capture and Logging: Burp Suite captures and logs requests made through the proxy by default, even when the interception is turned off. This logging functionality can be helpful for later analysis and review of prior requests.
+WebSocket Support: Burp Suite also captures and logs WebSocket communication, providing additional assistance when analysing web applications.
+Logs and History: The captured requests can be viewed in the HTTP history and WebSockets history sub-tabs, allowing for retrospective analysis and sending the requests to other Burp modules as needed.
+Some Notable Features in the Proxy Settings--
+Response Interception: By default, the proxy does not intercept server responses unless explicitly requested on a per-request basis. The "Intercept responses based on the following rules" checkbox, along with the defined rules, allows for a more flexible response interception
+Match and Replace: The "Match and Replace" section in the Proxy settings enables the use of regular expressions (regex) to modify incoming and outgoing requests. This feature allows for dynamic changes, such as modifying the user agent or manipulating cookies.
+
+Connecting through the proxy (foxieProxy)---
+Access FoxyProxy Options: Once installed, a button will appear at the top right of the Firefox browser. Click on the FoxyProxy button to access the FoxyProxy options pop-up.
+Create Burp Proxy Configuration: In the FoxyProxy options pop-up, click the Options button. This will open a new browser tab with the FoxyProxy configurations. Click the Add button to create a new proxy configuration.
+Add Proxy Details: On the "Add Proxy" page, fill in the following values:
+Title: Burp (or any preferred name)
+Proxy IP: 127.0.0.1
+Port: 8080
+Save Configuration: Click Save to save the Burp Proxy configuration.
+Activate Proxy Configuration: Click on the FoxyProxy icon at the top-right of the Firefox browser and select the Burp configuration. This will redirect your browser traffic through 127.0.0.1:8080. Note that Burp Suite must be running for your browser to make requests when this configuration is activated.
+Enable Proxy Intercept in Burp Suite: Switch to Burp Suite and ensure that Intercept is turned on in the Proxy tab.
+Test the Proxy: Open Firefox and try accessing a website, such as the homepage for http://10.48.171.103/. Your browser will hang, and the proxy will populate with the HTTP request. Congratulations, you have successfully intercepted your first request!
 
 
 
