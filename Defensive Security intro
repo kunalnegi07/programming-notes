@@ -1,1 +1,86 @@
+Security Operations Centre (SOC) the central hub for defending an organisation.
+Security Operation Centres use a variety of tools (such as a monitoring dashboard) to gain an overall picture of what is happening within the organisation's digital landscape. These dashboards capture activity across devices, the network, and more
+The monitoring dashboard shows a history of what has happened on FakeBank's systems. Tools like the monitoring dashboard are able to understand what happens day-to-day, to build what is called a baseline. When events deviate from this regular activity, the SOC team is alerted.
+For the defensive security team, stopping an attack - or incident - is a high priority. The sooner we can stop the attacker, the less harm that will come to the organisation.
+Stopping an attacker can be harder than it sounds. Modern attackers are smart, and often change their behaviour if they know they have been spotted. What stopped them once may not stop them again
+We can see that the attacker is targetting this specific username. Submitting random passwords until one works. This is known as bruteforcing, and it's only a matter of time before the attacker manages to find the correct password.
+As a member of the defensive security team, if we can disable dave.saunders before the attacker logs in, we are stopping the incident from becoming much more severe. Especially for a bank, unauthorised access to an account can lead to serious penalties for the organisation. Being proactive is the name of the game in defensive security.
+In defensive security, we share information about attackers. This is known as threat intelligence.
+The key to good threat intelligence is keeping it updated.
+The monitoring dashboard shows a history of what the attacker is trying to find on our website. You will see that the dashboard has captured the attacker trying many attempts to access hidden pages, very quickly.
+Once we know what the attacker is trying to achieve, we can then begin to take measures to stop the attacker and then finally fix the problem that allowed this attack in the first place.
+We need to create an incident report of what has just happened. We use these reports in defensive security to summarise what has just occurred and use them as training opportunities.
+Incident reports allow us to reflect, train, and detail this attack. This is helpful for us in defensive security - could we have done something quicker, or better? But also for other members within the organisation, such as improving our defences.
+Moreover, if the attack became something much more serious, law enforcement and government officials would need to be able to see what we had done when.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
