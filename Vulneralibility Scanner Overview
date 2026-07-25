@@ -1,1 +1,104 @@
+Vulnerability Scanning---
+Vulnerability scanning is the inspection of digital systems to find weaknesses. Organizations carry critical information in their digital infrastructure. They must regularly scan their systems and networks for vulnerabilities, as attackers can leverage these vulnerabilities to compromise their digital infrastructure, resulting in a considerable loss. Vulnerability scanning is also an important compliance requirement of many regulatory bodies
+Authenticated vs. Unauthenticated Scans
+Authenticated scans require the subject host's credentials and are more detailed than unauthenticated scans. These types of scans are helpful for discovering the threat surface within the host. However, unauthenticated scans are conducted without providing any credentials of the subject host. These scans help identify the threat surface from outside the host.
+Authenticated Scans	Unauthenticated Scans
+The credentials of the subject host must be provided to the vulnerability scanner.	The vulnerability scanner does not require the host’s credentials; it only needs the IP address.
+Identifies the vulnerabilities that can be exploited by the attackers having access to the host.	Identifies the vulnerabilities that can be exploited by an external attacker having no access to the subject host.
+It provides a deeper visibility into the target system by scanning its configuration and installed applications.	It is less resource-intensive and straightforward to set up.
+For example, scanning an internal database by providing its credentials to the vulnerability scanner.	For example, scanning a public-facing website for vulnerabilities that any user can exploit.
+Authenticated Scans.Unauthenticated Scans..
+Internal vs. External Scans
+Internal scans are conducted from inside the network, while external scans are conducted from outside the network. Let's see a few of their differences below.
+Internal Scans	External Scans
+Conducted from inside the network.	Conducted from outside the network.
+It focuses on the vulnerabilities that can be exploited inside the network.	It focuses on the vulnerabilities that can be exploited from outside the network.
+Identifies vulnerabilities that would be exposed to the attackers once they get inside the network.	Identifies the vulnerabilities exposed to the attacker from outside the network.
+External vs Internal Scans.
+The choice between vulnerability scan types depends on several factors. Authenticated scans are often used for internal vulnerability scanning, while unauthenticated scans are mostly used for external vulnerability scanning.
+
+Tools for vulnerability scanning---
+Nessus--
+Nessus (opens in new tab)was developed as an open-source project in 1998. It was later acquired by Tenable in 2005 and became proprietary software. It has extensive vulnerability scanning options and is widely used by large enterprises. It is available in both free and paid versions. The free version offers a limited number of scan features. In contrast, its commercial version offers advanced scanning features, unlimited scans, and professional support. Nessus needs to be deployed and managed on-premises.
+Qualys--
+Qualys (opens in new tab)was developed in 1999 as a subscription-based vulnerability management solution. Along with continuous vulnerability scanning, it provides compliance checks and asset management. It automatically alerts on the vulnerabilities found during continuous monitoring. The best thing about Qualys is that it is a cloud-based platform, which means there is no extra cost or effort to keep it up and running on our physical hardware and manage it.
+Nexpose--
+Nexpose(opens in new tab) was developed by Rapid7 in 2005 as a subscription-based vulnerability management solution. It continuously discovers new assets in the network and performs vulnerability scans on them. It gives vulnerability risk scores depending on the asset value and the vulnerability’s impact. It also provides compliance checks against various standards. Nexpose offers both on-premises and hybrid (cloud and on-premises) deployment modes.
+OpenVAS (Open Vulnerability Assessment System)--
+OpenVAS(opens in new tab) is an open-source vulnerability assessment solution developed by Greenbone Security. It offers basic features with known vulnerabilities scanned through its database. It is less extensive than commercial tools; however, it gives you the flavor of a complete vulnerability scanner. It is beneficial for small organizations and individual systems. The next section will explore this tool in more detail by performing vulnerability scanning.
+Almost all vulnerability scanners offer reporting capabilities. They generate a detailed report after every vulnerability scan. These reports contain a list of the vulnerabilities discovered, their risk scores, and detailed descriptions. Some vulnerability scanners offer advanced reporting capabilities that provide remediation methods for all the discovered vulnerabilities and allow you to export these vulnerability assessment reports in different formats.
+
+CVE & CVSS---
+CVE--
+CVE stands for Common Vulnerabilities and Exposures. Consider CVE a unique number for each of your inquiries and complaints. If there is any update to any issue, you can easily follow up on that using the unique CVE number. Coming out of the help desk example scenario, this CVE number is a unique number given to vulnerabilities. This was developed by the MITRE Corporation. Whenever a new vulnerability is discovered in any software application, it is given a unique CVE number as a reference and published online in a CVE database. This publication aims to make people aware of these vulnerabilities so they can apply protective measures to remediate them. You can find the details of any previously discovered vulnerability in the CVE database. An example of a CVE number given to a vulnerability can be seen in the picture below:
+Sample CEV- CVE-2024-9374
+CVE prefix: Every CVE number has the prefix “CVE” in the beginning.
+Year: The second part of every CVE number contains the year it was discovered (e.g., 2024).
+Arbitrary Digits: The last part of the CVE numbers contains four or more arbitrary digits (e.g., 9374)
+CVSS--
+CVSS stands for Common Vulnerability Scoring System. If we return to the help desk example again, you would always need to prioritize the complaints. The most efficient way to prioritize the complaints is by their severity level. What if all your complaints are registered with a score ranging from 0 to 10, where a higher score indicates a more severe complaint? This would resolve the problem of prioritizing critical complaints. This is called a CVSS score. In the computing world, just as each vulnerability has a CVE number that uniquely identifies it, each has a CVSS score that tells you its severity. The CVSS score is calculated by considering multiple factors, including its impact, ease of exploitability, etc. The severity as per the CVSS scores can be seen in the table below:
+CVSS Score Range	Severity Levels
+0.0-3.9	Low
+4.0-6.9	Medium
+7.0-8.9	High
+9.0-10	Critical
+
+OpenVAS---
+Performing a Vulnerability Scan
+Now, we are going to perform a vulnerability scan on a machine. The first step is to create a task inside the OpenVAS dashboard. We will fill out the details for this task and execute it to run the vulnerability scan.
+Click the “Tasks” option available inside the “Scans” option displayed on the dashboard:
+You will reach the page where all the running tasks are displayed. We would not see any task on this page because we have not yet performed any scans. To create a task, click the star icon and then the “New Task” option as highlighted in the screenshot:
+New Task option on OpenVAS dashboard.
+Enter the name of the task, and click the “Scan Targets” option as highlighted in the screenshot:
+Giving scan name and scan targets.
+Enter the name of the lab machine and its IP address, and click “Create”:
+You will have multiple scan options available. Each scan option has its scope of scanning; you can study the details of each scan type and choose accordingly, and then click on the “Create” button:
+Scan options and creation button.
+The task is created and will be displayed to you on the Tasks dashboard. To initiate the scan, click the play button in the “Actions” option of the task:
+Action button for the scan on the dashboard.
+It will take a few minutes to complete the scan. After the scan is completed, you will see its status marked as “Done”. The visualizations inside the Tasks dashboard will display some numbers indicating the severity of vulnerabilities found. To check the details of the scan, you have to click on the task name:
+Task Name option for the scan details.
+To see the details of all the vulnerabilities discovered during the scan, you can click on the number indicating the count of vulnerabilities found in the subject host:
+Count of vulnerabilities found
+Now, we have a list of all the vulnerabilities found in this machine and their severity. We can also click on any of them to see more details:
+Detailed list of vulnerabilities.
+Like other vulnerability scanners, OpenVAS allows us to export these results as reports. You can fetch the reports in any format from the Tasks dashboard.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
